@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beacon — one story per event, not one per outlet</title>
+<meta name="description" content="A news reader that clusters near-duplicate coverage from multiple wires into a single story, and shows you which sources corroborate it.">
+<meta property="og:title" content="Beacon">
+<meta property="og:description" content="One story per event, not one per outlet.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-inner">
+    <h1>Beacon</h1>
+    <p class="tagline">One story per event, not one per outlet.</p>
+    <p class="stamp" id="stamp">—</p>
+  </div>
+</header>
+
+<main>
+  <section class="controls">
+    <label for="threshold">
+      Merge threshold <output id="tval">0.62</output>
+    </label>
+    <div class="ends"><span>Consolidated feed</span><span>Diverse sources</span></div>
+    <input type="range" id="threshold" min="0.30" max="0.95" step="0.01" value="0.62">
+    <p class="hint">Slide left to merge more aggressively; slide right to keep more sources separate.</p>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="feed" id="feed" aria-live="polite">
+    <p class="loading">Reading the wires…</p>
+  </section>
+
+  <section class="method">
+    <h2>How the merging works</h2>
+    <ol>
+      <li><b>Normalise.</b> Fold accents and case, strip feed HTML, drop stopwords, strip one common suffix so <i>refunds</i> matches <i>refund</i>.</li>
+      <li><b>Score every pair.</b> Title overlap (a blend of overlap coefficient and Jaccard) plus entity agreement, attenuated when the two items are far apart in time.</li>
+      <li><b>Union-find, not first-match.</b> Greedy clustering cannot merge a chain where A matches B and B matches C but A and C do not. Union-find can, and the result does not depend on input order.</li>
+      <li><b>Pick a lead.</b> The earliest published item wins, with the shorter headline breaking ties — the version wired first is usually the original.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <p>Beacon · KK (Conan Sultan Khan) · <a href="https://github.com/kkcyber2">github.com/kkcyber2</a></p>
+  <p class="note">Demo feeds are fictional and bundled with the repo.</p>
+</footer>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>
