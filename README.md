@@ -4,7 +4,7 @@ A news reader that shows one story per event instead of one per outlet.
 
 Feeds duplicate relentlessly: four wires, one announcement, four headlines. Beacon parses RSS and Atom, scores every pair of items, and merges near-duplicates by union-find — then shows which sources corroborate the story and which version printed first.
 
-**KK (Conan Sultan Khan)** · [github.com/kkcyber2](https://github.com/kkcyber2) · kkdev9715@gmail.com
+**Konain Sultan Khan (KK)** · [github.com/kkcyber2](https://github.com/kkcyber2) · kkdev9715@gmail.com
 
 ## Run it
 
